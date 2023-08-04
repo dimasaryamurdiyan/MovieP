@@ -1,0 +1,74 @@
+[versions]
+# Plugin
+androidGradlePlugin= "8.1.0"
+kotlinAndroid= "1.8.20"
+
+coreKtx = "1.9.0"
+appCompat = "1.6.1"
+constraintLayout = "2.1.4"
+
+cardview = "1.0.0"
+recyclerview = "1.2.1"
+material = "1.4.0"
+glide = "4.12.0"
+
+retrofit = "2.9.0"
+loggingInterceptor = "4.9.0"
+
+kotlinCoroutines = "1.6.4"
+
+lifecycle = "2.6.1"
+
+nav_version = "2.6.0"
+
+paging = "3.1.1"
+
+# Hilt
+hilt = "2.47"
+hiltExt = "1.0.0"
+
+# Testing
+junit = "4.13.2"
+extJunit = "1.1.5"
+espressoCore = "3.5.1"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinAndroid" }
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appCompat = {group = "androidx.appcompat", name = "appcompat", version.ref="appCompat"}
+androidx-constraintLayout = {group = "androidx.constraintlayout", name = "constraintlayout", version.ref="constraintLayout"}
+androidx-cardView = {group = "androidx.cardview", name = "cardview", version.ref="cardview"}
+androidx-recyclerView = {group = "androidx.recyclerview", name = "recyclerview", version.ref="cardview"}
+androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+androidx-navigation-fragment = { group = "androidx.navigation", name="fragment-ktx", version.ref="nav_version"}
+androidx-navigation-ui = { group = "androidx.navigation", name="ui-ktx", version.ref="nav_version"}
+
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "retrofit" }
+
+coroutines-core = { group ="org.jetbrains.kotlinx", name="kotlinx-coroutines-core", version.ref = "kotlinCoroutines"}
+coroutines-android = { group ="org.jetbrains.kotlinx", name="kotlinx-coroutines-android", version.ref = "kotlinCoroutines"}
+
+
+#Hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
+hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit= { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
