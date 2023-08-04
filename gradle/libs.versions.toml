@@ -48,6 +48,7 @@ androidx-recyclerView = {group = "androidx.recyclerview", name = "recyclerview",
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 androidx-navigation-fragment = { group = "androidx.navigation", name="fragment-ktx", version.ref="nav_version"}
 androidx-navigation-ui = { group = "androidx.navigation", name="ui-ktx", version.ref="nav_version"}
+androidx-paging = { group = "androidx.paging", name="paging-runtime-ktx", version.ref="paging"}
 
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }

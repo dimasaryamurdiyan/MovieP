@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.paging)
 
     implementation(libs.material)
     implementation(libs.glide)
