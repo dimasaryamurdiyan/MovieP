@@ -20,6 +20,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+        buildConfigField("String", "API_KEY", "\"94b1176a84b5c876a21900434bc4878a\"")
+        buildConfigField("String", "POSTER_PATH", "\"https://image.tmdb.org/t/p/original\"")
+        buildConfigField("String", "BACKDROP_PATH",  "\"https://image.tmdb.org/t/p/w500\"")
     }
 
     buildTypes {
