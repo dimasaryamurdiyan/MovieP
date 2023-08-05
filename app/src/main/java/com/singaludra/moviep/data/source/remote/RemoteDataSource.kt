@@ -7,9 +7,10 @@ import com.singaludra.moviep.data.source.remote.network.ApiService
 import com.singaludra.moviep.data.source.remote.paging.MoviesPagingSource
 import com.singaludra.moviep.data.source.remote.response.MovieResponse
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 const val NETWORK_PAGE_SIZE = 25
-class RemoteDataSource(
+class RemoteDataSource @Inject constructor(
     private val movieService: ApiService
 ): IRemoteDataSource{
     override fun getMovies(): Flow<PagingData<MovieResponse>> {

@@ -7,10 +7,11 @@ import com.singaludra.moviep.data.source.remote.network.ApiService
 import com.singaludra.moviep.data.source.remote.response.MovieResponse
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 private const val TMDB_STARTING_PAGE_INDEX = 1
 
-class MoviesPagingSource (
+class MoviesPagingSource @Inject constructor(
     private val service: ApiService
 ): PagingSource<Int, MovieResponse>() {
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
