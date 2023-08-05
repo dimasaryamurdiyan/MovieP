@@ -1,19 +1,26 @@
-package com.singaludra.moviep.presentation
+package com.singaludra.moviep.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.singaludra.moviep.R
 import com.singaludra.moviep.databinding.ActivityMainBinding
 import com.singaludra.moviep.domain.model.Movie
+import com.singaludra.moviep.presentation.main.adapter.MovieAdapter
+import com.singaludra.moviep.presentation.main.adapter.MovieLoadStateAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var movieAdapter: MovieAdapter
+
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,26 +31,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onViewObserve() {
-        TODO("Not yet implemented")
+        viewModel.apply {
+            lifecycleScope.launch {
+                getMovies().collectLatest { movies ->
+                    movieAdapter.submitData(movies)
+                }
+            }
+        }
     }
 
     private fun onViewBind() {
         binding.apply {
-            movieAdapter = MovieAdapter(object : MovieAdapter.OnClickListener{
+            movieAdapter = MovieAdapter(object : MovieAdapter.OnClickListener {
                 override fun onClickItem(item: Movie) {
                 }
             })
 
             rvMovies.adapter = movieAdapter.withLoadStateHeaderAndFooter(
-                header =,
-                footer = 
+                header = MovieLoadStateAdapter{movieAdapter.retry()},
+                footer = MovieLoadStateAdapter{movieAdapter.retry()}
             )
 
+            movieAdapter.addLoadStateListener { loadState -> renderUi(loadState) }
+
+            binding.btnMoviesRetry.setOnClickListener { movieAdapter.retry() }
         }
     }
 
     private fun renderUi(loadState: CombinedLoadStates) {
-        val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter?.itemCount == 0
+        val isListEmpty = loadState.refresh is LoadState.NotLoading && movieAdapter.itemCount == 0
 
         binding.rvMovies.isVisible = !isListEmpty
         binding.tvMoviesEmpty.isVisible = isListEmpty
