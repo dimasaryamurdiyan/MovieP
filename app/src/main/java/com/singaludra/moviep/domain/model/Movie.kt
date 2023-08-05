@@ -10,5 +10,11 @@ data class Movie(
     val title: String,
     val overview: String,
     val releaseDate: String,
-    val originalLanguage: String
-)
+    val originalLanguage: String,
+    val genres: List<Movie.Genre>? = null
+) {
+    class Genre(
+        val id: Int,
+        val name: String
+    )
+}
