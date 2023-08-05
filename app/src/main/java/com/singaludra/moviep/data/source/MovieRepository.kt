@@ -5,8 +5,10 @@ import androidx.paging.map
 import com.singaludra.moviep.data.source.remote.IRemoteDataSource
 import com.singaludra.moviep.data.source.remote.network.ApiResponse
 import com.singaludra.moviep.data.source.remote.response.DetailMovieResponse
+import com.singaludra.moviep.data.source.remote.response.ReviewResponse
 import com.singaludra.moviep.data.source.remote.response.mapToDomain
 import com.singaludra.moviep.domain.model.Movie
+import com.singaludra.moviep.domain.model.Review
 import com.singaludra.moviep.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -33,6 +35,21 @@ class MoviesRepository @Inject constructor(
 
             override fun mapApiResponseToDomain(data: DetailMovieResponse): Movie {
                 return data.mapToDomain()
+            }
+
+        }.asFlow()
+    }
+
+    override fun getMovieReviews(id: Int): Flow<Resource<List<Review>>> {
+        return object :NetworkBoundResource<ReviewResponse, List<Review>>(){
+            override suspend fun createCall(): Flow<ApiResponse<ReviewResponse>> {
+                return remoteDataSource.getMovieReviews(id)
+            }
+
+            override fun mapApiResponseToDomain(data: ReviewResponse):  List<Review> {
+                return data.results.map {
+                    it.mapToDomain()
+                }
             }
 
         }.asFlow()
