@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.singaludra.moviep.BuildConfig
 import com.singaludra.moviep.R
@@ -13,6 +14,8 @@ import com.singaludra.moviep.databinding.ActivityDetailBinding
 import com.singaludra.moviep.databinding.ActivityMainBinding
 import com.singaludra.moviep.databinding.GenreChipBinding
 import com.singaludra.moviep.domain.model.Movie
+import com.singaludra.moviep.domain.model.Review
+import com.singaludra.moviep.presentation.detail.adapter.ReviewAdapter
 import com.singaludra.moviep.presentation.main.MainViewModel
 import com.singaludra.moviep.utils.Utils
 import com.singaludra.moviep.utils.loadImage
@@ -29,6 +32,10 @@ class DetailActivity : AppCompatActivity() {
         intent.getIntExtra(EXTRA_DATA, 0)
     }
 
+    private val reviewAdapter by lazy {
+        ReviewAdapter()
+    }
+
     var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +49,13 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun onViewBind() {
+        binding.apply {
+            rvReview.apply {
+                layoutManager = LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL ,false)
+
+                adapter = reviewAdapter
+            }
+        }
     }
 
     private fun onViewObserve() {
@@ -61,8 +75,25 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            reviewList.observe(this@DetailActivity){
+                when(it){
+                    is Resource.Success -> {
+                        reviewAdapter.differ.submitList(it.data)
+                        hideLoading()
+                    }
+                    is Resource.Error -> {
+                        hideLoading()
+                        this@DetailActivity.shortToast(it.message ?: "Something went wrong")
+                    }
+                    is Resource.Loading -> {
+                        showLoading()
+                    }
+                }
+            }
         }
     }
+
 
     private fun renderUi(data: Movie?) {
         with(binding){
@@ -83,8 +114,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun fetchViewModelCallback() {
-        Log.d(DetailActivity::class.java.toString(), movieId.toString())
-        viewModel.getDetailGame(movieId)
+        viewModel.apply {
+            getDetailGame(movieId)
+            getMovieReview(movieId)
+        }
     }
 
     private fun createChip(label: String): Chip {
