@@ -23,6 +23,8 @@ nav_version = "2.6.0"
 
 paging = "3.1.1"
 
+exoplayer = "2.18.7"
+
 # Hilt
 hilt = "2.47"
 hiltExt = "1.0.0"
@@ -61,6 +63,7 @@ logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercep
 coroutines-core = { group ="org.jetbrains.kotlinx", name="kotlinx-coroutines-core", version.ref = "kotlinCoroutines"}
 coroutines-android = { group ="org.jetbrains.kotlinx", name="kotlinx-coroutines-android", version.ref = "kotlinCoroutines"}
 
+exoplayer = { group = "com.google.android.exoplayer", name="exoplayer", version.ref="exoplayer"}
 
 #Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }

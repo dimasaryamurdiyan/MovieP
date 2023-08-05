@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
 
+    implementation(libs.exoplayer)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
