@@ -15,7 +15,7 @@ interface ApiService {
         @Query("page") page: Int
     ): ResponseItems<MovieResponse>
 
-    @GET("movie/{id}")
+    @GET("movie/{movie_id}")
     suspend fun getDetailMovie(
         @Path("movie_id") id: Int
     ): DetailMovieResponse

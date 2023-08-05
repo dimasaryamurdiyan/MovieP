@@ -1,6 +1,8 @@
 package com.singaludra.moviep.utils
 
+import android.content.Context
 import android.widget.ImageView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 
 fun ImageView.loadImage(url: String) {
@@ -9,3 +11,8 @@ fun ImageView.loadImage(url: String) {
         .load(url)
         .into(this)
 }
+
+fun Context.shortToast(message : CharSequence) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+

@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.flow
 
 abstract class NetworkBoundResource<RequestType, ResultType> {
     private var result: Flow<Resource<ResultType>> = flow {
-
         emit(Resource.Loading())
         when (val apiResponse = createCall().first()) {
             is ApiResponse.Success -> {

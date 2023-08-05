@@ -1,5 +1,6 @@
 package com.singaludra.moviep.presentation.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.singaludra.moviep.databinding.ActivityMainBinding
 import com.singaludra.moviep.domain.model.Movie
+import com.singaludra.moviep.presentation.detail.DetailActivity
 import com.singaludra.moviep.presentation.main.adapter.MovieAdapter
 import com.singaludra.moviep.presentation.main.adapter.MovieLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             movieAdapter = MovieAdapter(object : MovieAdapter.OnClickListener {
                 override fun onClickItem(item: Movie) {
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, item.id)
+                    startActivity(intent)
                 }
             })
 
