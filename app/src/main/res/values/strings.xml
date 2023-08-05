@@ -3,4 +3,6 @@
     <string name="btnRetry">Retry</string>
     <string name="tv_empty">No Data found!</string>
     <string name="tv_trends">Top Rated Movies</string>
+    <string name="tonton_trailer">Tonton Trailer</string>
+    <string name="overview">Overview</string>
 </resources>
