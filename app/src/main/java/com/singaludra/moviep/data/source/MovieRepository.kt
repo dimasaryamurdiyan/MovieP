@@ -6,9 +6,11 @@ import com.singaludra.moviep.data.source.remote.IRemoteDataSource
 import com.singaludra.moviep.data.source.remote.network.ApiResponse
 import com.singaludra.moviep.data.source.remote.response.DetailMovieResponse
 import com.singaludra.moviep.data.source.remote.response.ReviewResponse
+import com.singaludra.moviep.data.source.remote.response.VideosResponse
 import com.singaludra.moviep.data.source.remote.response.mapToDomain
 import com.singaludra.moviep.domain.model.Movie
 import com.singaludra.moviep.domain.model.Review
+import com.singaludra.moviep.domain.model.Video
 import com.singaludra.moviep.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -47,6 +49,21 @@ class MoviesRepository @Inject constructor(
             }
 
             override fun mapApiResponseToDomain(data: ReviewResponse):  List<Review> {
+                return data.results.map {
+                    it.mapToDomain()
+                }
+            }
+
+        }.asFlow()
+    }
+
+    override fun getMovieVideos(id: Int): Flow<Resource<List<Video>>> {
+        return object : NetworkBoundResource<VideosResponse, List<Video>>(){
+            override suspend fun createCall(): Flow<ApiResponse<VideosResponse>> {
+                return remoteDataSource.getMovieVideos(id)
+            }
+
+            override fun mapApiResponseToDomain(data: VideosResponse): List<Video> {
                 return data.results.map {
                     it.mapToDomain()
                 }

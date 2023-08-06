@@ -15,8 +15,10 @@ import com.singaludra.moviep.databinding.ActivityMainBinding
 import com.singaludra.moviep.databinding.GenreChipBinding
 import com.singaludra.moviep.domain.model.Movie
 import com.singaludra.moviep.domain.model.Review
+import com.singaludra.moviep.presentation.common.VideoPlayerDialogFragment
 import com.singaludra.moviep.presentation.detail.adapter.ReviewAdapter
 import com.singaludra.moviep.presentation.main.MainViewModel
+import com.singaludra.moviep.utils.Constants
 import com.singaludra.moviep.utils.Utils
 import com.singaludra.moviep.utils.loadImage
 import com.singaludra.moviep.utils.shortToast
@@ -36,7 +38,7 @@ class DetailActivity : AppCompatActivity() {
         ReviewAdapter()
     }
 
-    var progressDialog: ProgressDialog? = null
+    private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +93,28 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            videoList.observe(this@DetailActivity){
+                when(it){
+                    is Resource.Success -> {
+                        hideLoading()
+                        val key = it.data?.get(0)?.key ?: ""
+
+                        binding.btnPlayTrailer.setOnClickListener {
+                            VideoPlayerDialogFragment.newInstance(
+                                url = key
+                            ).show(supportFragmentManager, VideoPlayerDialogFragment.TAG)
+                        }
+                    }
+                    is Resource.Error -> {
+                        hideLoading()
+                        this@DetailActivity.shortToast(it.message ?: "Something went wrong")
+                    }
+                    is Resource.Loading -> {
+                        showLoading()
+                    }
+                }
+            }
         }
     }
 
@@ -117,6 +141,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.apply {
             getDetailGame(movieId)
             getMovieReview(movieId)
+            getMovieVideos(movieId)
         }
     }
 

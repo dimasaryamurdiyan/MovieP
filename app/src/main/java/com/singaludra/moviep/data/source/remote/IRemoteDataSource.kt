@@ -5,6 +5,7 @@ import com.singaludra.moviep.data.source.remote.network.ApiResponse
 import com.singaludra.moviep.data.source.remote.response.DetailMovieResponse
 import com.singaludra.moviep.data.source.remote.response.MovieResponse
 import com.singaludra.moviep.data.source.remote.response.ReviewResponse
+import com.singaludra.moviep.data.source.remote.response.VideosResponse
 import kotlinx.coroutines.flow.Flow
 
 interface IRemoteDataSource {
@@ -13,4 +14,5 @@ interface IRemoteDataSource {
     fun getDetailMovie(id: Int): Flow<ApiResponse<DetailMovieResponse>>
 
     fun getMovieReviews(id: Int): Flow<ApiResponse<ReviewResponse>>
+    fun getMovieVideos(id: Int): Flow<ApiResponse<VideosResponse>>
 }

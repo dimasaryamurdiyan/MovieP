@@ -9,6 +9,7 @@ import com.singaludra.moviep.data.source.remote.paging.MoviesPagingSource
 import com.singaludra.moviep.data.source.remote.response.DetailMovieResponse
 import com.singaludra.moviep.data.source.remote.response.MovieResponse
 import com.singaludra.moviep.data.source.remote.response.ReviewResponse
+import com.singaludra.moviep.data.source.remote.response.VideosResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -54,6 +55,23 @@ class RemoteDataSource @Inject constructor(
         return flow {
             try {
                 val response = movieService.getMovieReviews(
+                    id
+                )
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e : Exception){
+                emit(ApiResponse.Error(e.parse()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun getMovieVideos(id: Int): Flow<ApiResponse<VideosResponse>> {
+        return flow {
+            try {
+                val response = movieService.getMovieVideos(
                     id
                 )
                 if (response != null) {

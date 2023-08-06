@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.singaludra.moviep.data.source.Resource
 import com.singaludra.moviep.domain.model.Movie
 import com.singaludra.moviep.domain.model.Review
+import com.singaludra.moviep.domain.model.Video
 import com.singaludra.moviep.domain.repository.IMovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,6 +35,17 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getMovieReviews(id).collect{
                 _reviewList.postValue(it)
+            }
+        }
+    }
+
+    private val _videoList = MutableLiveData<Resource<List<Video>>>()
+    val videoList: LiveData<Resource<List<Video>>> get() = _videoList
+
+    fun getMovieVideos(id: Int) {
+        viewModelScope.launch {
+            repository.getMovieVideos(id).collect{
+                _videoList.postValue(it)
             }
         }
     }

@@ -4,6 +4,7 @@ import com.singaludra.moviep.data.source.remote.response.DetailMovieResponse
 import com.singaludra.moviep.data.source.remote.response.MovieResponse
 import com.singaludra.moviep.data.source.remote.response.ResponseItems
 import com.singaludra.moviep.data.source.remote.response.ReviewResponse
+import com.singaludra.moviep.data.source.remote.response.VideosResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -25,4 +26,9 @@ interface ApiService {
     suspend fun getMovieReviews(
         @Path("movie_id") id: Int
     ): ReviewResponse
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") id: Int
+    ): VideosResponse
 }
