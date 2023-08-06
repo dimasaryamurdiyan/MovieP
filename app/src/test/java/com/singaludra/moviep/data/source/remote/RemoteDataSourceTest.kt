@@ -8,8 +8,6 @@ import com.singaludra.moviep.data.source.remote.response.ReviewResponse
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -64,6 +62,7 @@ class RemoteDataSourceTest {
     fun tearDown() {
         mockWebServer.shutdown()
     }
+
     @Test
     fun `test getDetailMovie return success`() = runBlocking {
         // Given
@@ -84,6 +83,22 @@ class RemoteDataSourceTest {
 
         // Then
         assertEquals("Movie 1 Detail", (result as ApiResponse.Success<DetailMovieResponse>).data.title)
+    }
+
+    @Test
+    fun `test getDetailMovie with error 500`() = runBlocking {
+        // Given
+        val movieId = 123
+        val errorMessage = "Error occurred"
+        // Enqueue a mock error response from the mock web server
+        val mockResponse = MockResponse().setResponseCode(500).setBody(errorMessage)
+        mockWebServer.enqueue(mockResponse)
+
+        // When
+        val result = remoteDataSource.getDetailMovie(movieId).toList().single()
+
+        // Then
+        assertTrue(result is ApiResponse.Error)
     }
 
     @Test
@@ -130,6 +145,44 @@ class RemoteDataSourceTest {
 
         // When
         val result = remoteDataSource.getMovieReviews(movieId).toList().single()
+
+        // Then
+        assertTrue(result is ApiResponse.Error)
+    }
+
+    @Test
+    fun `test getMovieVideos return success`() = runBlocking {
+        // Given
+        val movieId = 123
+
+        // Enqueue a mock response from the mock web server
+        val mockResponse = MockResponse().setBody(
+            """
+            {
+                "id": $movieId
+            }
+            """
+        )
+        mockWebServer.enqueue(mockResponse)
+
+        // When
+        val result = remoteDataSource.getMovieVideos(movieId).toList().last()
+
+        // Then
+        assertTrue(result is ApiResponse.Success)
+    }
+
+    @Test
+    fun `test getMovieVideos with error 500`() = runBlocking {
+        // Given
+        val movieId = 123
+        val errorMessage = "Error occurred"
+        // Enqueue a mock error response from the mock web server
+        val mockResponse = MockResponse().setResponseCode(500).setBody(errorMessage)
+        mockWebServer.enqueue(mockResponse)
+
+        // When
+        val result = remoteDataSource.getMovieVideos(movieId).toList().single()
 
         // Then
         assertTrue(result is ApiResponse.Error)
