@@ -79,4 +79,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockwebserver)
 }
