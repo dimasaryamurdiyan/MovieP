@@ -34,6 +34,7 @@ extJunit = "1.1.5"
 espressoCore = "3.5.1"
 mockito = "3.11.2"
 mockwebserver = "4.9.1"
+coretesting = "2.1.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -78,3 +79,5 @@ ext-junit= { group = "androidx.test.ext", name = "junit", version.ref = "extJuni
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockwebserver" }
+coroutines-test = { group ="org.jetbrains.kotlinx", name="kotlinx-coroutines-test", version.ref = "kotlinCoroutines"}
+core-testing = { group ="androidx.arch.core", name="core-testing", version.ref = "coretesting"}

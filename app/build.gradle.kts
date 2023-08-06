@@ -81,4 +81,6 @@ dependencies {
     testImplementation(libs.espresso.core)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockwebserver)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.core.testing)
 }
