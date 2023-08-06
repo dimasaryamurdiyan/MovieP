@@ -5,7 +5,8 @@ The app was developed in :
 - MVVM Architectural pattern
 - Hilt
 - Coroutines
-- Mockito for unit testing
+- Mockito, mockwebserver for unit testing
+- Version Catalogue
 
 ## Project Structure
 Globally the project has the following top level packages:
